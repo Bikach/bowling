@@ -11,10 +11,10 @@ public class Bowling {
 
     public int score(String bowlingGame) {
         var frames = bowlingGame.replace(MISS_INDICATOR, NULL_SCORE).split(FRAME_BOUNDARY);
-        return computeScore(frames);
+        return computeScoreBy(frames);
     }
 
-    private int computeScore(String[] frames) {
+    private int computeScoreBy(String[] frames) {
         var result = 0;
         for (String frame: frames) {
             var tries = frame.split("");
