@@ -8,7 +8,7 @@ class BowlingTest {
     private final Bowling bowling = new Bowling();
 
     @Test
-    void shouldHaveAScoreEqualsToZeroWhenFramesAreMissing() {
+    void shouldHaveAScoreEqualsToZeroWhenTotallyFailedGame() {
         var totallyFailedGame = "--|--|--|--|--|--|--|--|--|--";
 
         var score = bowling.score(totallyFailedGame);
