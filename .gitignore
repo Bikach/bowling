@@ -1,0 +1,79 @@
+kip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@Bikach 
+Bikach
+/
+Huxor_project
+0
+00
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+Huxor_project/.gitignore
+@Bikach
+Bikach add cars pictures, add champs picturePath entities Cars
+Latest commit 66e4247 on 21 Aug 2018
+ History
+ 1 contributor
+35 lines (30 sloc)  331 Bytes
+  
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+
+## files ##
+*.properties
+*.xml
+*.cmd
+*.mvn
+mvnw
+*.png
+*.jpg
+© 2021 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+
