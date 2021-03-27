@@ -1,14 +1,12 @@
 package bowling;
 
+import java.util.Objects;
+
 public class Score {
     private int result;
 
     public Score(int result) {
         this.result = result;
-    }
-
-    public void addResult(int result) {
-        this.result += result;
     }
 
     public boolean isStrike() {
@@ -25,6 +23,11 @@ public class Score {
         if (o == null || getClass() != o.getClass()) return false;
         Score score = (Score) o;
         return result == score.result;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(result);
     }
 
     @Override
