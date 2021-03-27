@@ -7,6 +7,18 @@ public class Score {
         this.result = result;
     }
 
+    public void addResult(int result) {
+        this.result += result;
+    }
+
+    public boolean isStrike() {
+        return result == 10 && this instanceof StrikeScore;
+    }
+
+    public boolean isSpare() {
+        return result == 10 && this instanceof SpareScore;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -15,4 +27,14 @@ public class Score {
         return result == score.result;
     }
 
+    @Override
+    public String toString() {
+        return "Score{" +
+                "result=" + result +
+                '}';
+    }
+
+    public int getResult() {
+        return result;
+    }
 }
