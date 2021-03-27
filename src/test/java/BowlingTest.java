@@ -1,4 +1,4 @@
-import Bowling.Bowling;
+import bowling.Bowling;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -8,39 +8,23 @@ class BowlingTest {
     private final Bowling bowling = new Bowling();
 
     @Test
-    void shouldHaveAScoreEqualsToZeroWhenTotallyFailedGame() {
-        var totallyFailedGame = "--|--|--|--|--|--|--|--|--|--";
-
-        var score = bowling.score(totallyFailedGame);
-
-        assertThat(score).isZero();
+    void should_return_1_when_one_pin_hit() {
+        assertThat(bowling.computeScore("1")).isEqualTo(1);
     }
 
     @Test
-    void shouldHaveAScoreEqualsToOneWhenOnlyOnePinKnocksDown() {
-        var onePinKnockDown = "1-|--|--|--|--|--|--|--|--|--";
-
-        var score = bowling.score(onePinKnockDown);
-
-        assertThat(score).isEqualTo(1);
+    void should_return_2_when_two_pins_hit() {
+        assertThat(bowling.computeScore("2")).isEqualTo(2);
     }
 
     @Test
-    void shouldHaveAScoreEqualsToSixWhenSixPinsKnockDown() {
-        var sixPinsKnockDown = "1-|--|--|--|5-|--|--|--|--|--";
-
-        var score = bowling.score(sixPinsKnockDown);
-
-        assertThat(score).isEqualTo(6);
+    void should_return_10_when_have_strike() {
+        assertThat(bowling.computeScore("x")).isEqualTo(10);
     }
 
     @Test
-    void shouldHaveAScoreEqualsToFifteenWhenFifteenPinsKnockDown() {
-        var fifteenPinsKnockDown = "1-|--|--|--|5-|--|--|--|--|9-";
-
-        var score = bowling.score(fifteenPinsKnockDown);
-
-        assertThat(score).isEqualTo(15);
+    void should_return_0_when_missed() {
+        assertThat(bowling.computeScore("-")).isZero();
     }
 
 }
