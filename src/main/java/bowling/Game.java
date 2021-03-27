@@ -1,5 +1,7 @@
 package bowling;
 
+import bowling.frame.Frame;
+
 public class Game {
 
     private final Frame firstFrame;

@@ -1,9 +1,11 @@
 package bowling;
 
+import bowling.frame.ClassicFrame;
+import bowling.frame.Frame;
+import bowling.frame.SpareFrame;
+import bowling.frame.StrikeFrame;
 import bowling.score.Score;
 import bowling.score.ScoreBuilder;
-import bowling.score.SpareScore;
-import bowling.score.StrikeScore;
 
 public class Bowling {
 
@@ -22,15 +24,15 @@ public class Bowling {
         char numberOfPinHitInFirstTrieInFrameOne = frame.charAt(0);
         char numberOfPinHitInSecondTrieInFrameOne = frame.charAt(1);
         if(STRIKE == numberOfPinHitInFirstTrieInFrameOne) {
-            return new Frame(new StrikeScore());
+            return new StrikeFrame();
         }
 
         Score s1 = ScoreBuilder.buildScore(numberOfPinHitInFirstTrieInFrameOne);
         if(SPARE == numberOfPinHitInSecondTrieInFrameOne) {
-            return new Frame(s1, new SpareScore());
+            return new SpareFrame(s1);
         }
         Score s2 = ScoreBuilder.buildScore(numberOfPinHitInSecondTrieInFrameOne);
-        return new Frame(s1, s2);
+        return new ClassicFrame(s1, s2);
     }
 
 

@@ -56,16 +56,31 @@ class BowlingTest {
     @Nested
     class SecondFrameSuccessful {
 
-        @Test
-        void should_return_5_when_first_frame_result_was_3_and_second_frame_result_was_2() {
-            assertThat(bowling.computeScoreInFrame("12|", "11|")).isEqualTo(5);
+        @Nested
+        class ClassicInFirstFrame {
+
+            @Test
+            void should_return_5_when_first_frame_result_is_3_and_second_frame_result_is_2() {
+                assertThat(bowling.computeScoreInFrame("12|", "11|")).isEqualTo(5);
+            }
+
+            @Test
+            void should_return_2_when_second_frame_result_is_strike() {
+                assertThat(bowling.computeScoreInFrame("11|", "x|")).isEqualTo(2);
+            }
+
+            @Test
+            void should_return_2_when_second_frame_result_is_spare() {
+                assertThat(bowling.computeScoreInFrame("11|", "1/|")).isEqualTo(2);
+            }
+
         }
 
         @Nested
         class StrikeInFirstFrame {
 
             @Test
-            void should_return_14_when_second_frame_result_was_2() {
+            void should_return_14_when_second_frame_result_is_2() {
                 assertThat(bowling.computeScoreInFrame("x|", "11|")).isEqualTo(14);
             }
 
@@ -73,12 +88,17 @@ class BowlingTest {
             void should_return_20_when_second_frame_is_spare() {
                 assertThat(bowling.computeScoreInFrame("x|", "1/|")).isEqualTo(20);
             }
+
+            @Test
+            void should_return_20_when_second_frame_is_strike() {
+                assertThat(bowling.computeScoreInFrame("x|", "x|")).isZero();
+            }
         }
 
         @Nested
         class SpareInFirstFrame {
             @Test
-            void should_return_13_when_second_frame_result_was_missed() {
+            void should_return_13_when_second_frame_result_is_missed() {
                 assertThat(bowling.computeScoreInFrame("1/|", "2-|")).isEqualTo(14);
             }
 
@@ -86,8 +106,14 @@ class BowlingTest {
             void should_return_20_when_second_frame_is_strike() {
                 assertThat(bowling.computeScoreInFrame("2/|", "x|")).isEqualTo(20);
             }
+
             @Test
-            void should_return_17_when_second_frame_result_was_not_missed() {
+            void should_return_12_when_second_frame_is_spare() {
+                assertThat(bowling.computeScoreInFrame("1/|", "2/|")).isEqualTo(12);
+            }
+
+            @Test
+            void should_return_17_when_second_frame_result_is_not_missed() {
                 assertThat(bowling.computeScoreInFrame("1/|", "23|")).isEqualTo(17);
             }
 
