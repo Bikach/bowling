@@ -2,24 +2,29 @@ package bowling;
 
 public class Bowling {
 
-    private static final String STRIKE = "x";
-    private static final String MISSED = "-";
-    private static final String SPARE = "/";
+    private static final char STRIKE = 'x';
+    private static final char MISSED = '-';
+    private static final char SPARE = '/';
 
-    public int computeScore(String numberOfPinHitInFirstTrie, String numberOfPinHitInSecondTrie) {
-        if(SPARE.equals(numberOfPinHitInSecondTrie)) {
+    public int computeScoreInFrame(String frame) {
+        char numberOfPinHitInFirstTrie = frame.charAt(0);
+        char numberOfPinHitInSecondTrie = frame.charAt(1);
+        if(STRIKE == numberOfPinHitInFirstTrie) {
+            return 10;
+        }
+        if(SPARE == numberOfPinHitInSecondTrie) {
             return 10;
         }
         return computeScore(numberOfPinHitInFirstTrie) + computeScore(numberOfPinHitInSecondTrie);
     }
 
-    public int computeScore(String numberOfPinHit) {
-        if(STRIKE.equals(numberOfPinHit)) {
+    private int computeScore(char numberOfPinHit) {
+        if(STRIKE == numberOfPinHit) {
             return 10;
         }
-        else if(MISSED.equals(numberOfPinHit)) {
+        else if(MISSED == numberOfPinHit) {
             return 0;
         }
-       return Integer.parseInt(numberOfPinHit);
+       return Character.getNumericValue(numberOfPinHit);
     }
 }
