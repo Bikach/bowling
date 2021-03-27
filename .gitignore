@@ -8,13 +8,10 @@ Explore
  
 @Bikach 
 Bikach
-/
 Huxor_project
 0
 00
 Code
-Issues
-Pull requests
 Actions
 Projects
 Wiki
@@ -46,6 +43,7 @@ Latest commit 66e4247 on 21 Aug 2018
 *.iws
 *.iml
 *.ipr
+misc.xml
 
 ### NetBeans ###
 /nbproject/private/
@@ -67,7 +65,6 @@ mvnw
 © 2021 GitHub, Inc.
 Terms
 Privacy
-Security
 Status
 Docs
 Contact GitHub
