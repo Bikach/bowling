@@ -80,6 +80,11 @@ class BowlingTest {
                 assertThat(bowling.computeScoreInFrame("1/|", "2-|")).isEqualTo(new Score(14));
             }
 
+            @Test
+            void should_return_20_when_second_frame_is_strike() {
+                assertThat(bowling.computeScoreInFrame("2/|", "x|")).isEqualTo(new Score(20));
+            }
+
         }
     }
 

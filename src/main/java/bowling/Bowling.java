@@ -9,6 +9,9 @@ public class Bowling {
     public Score computeScoreInFrame(String firstFrame, String secondFrame) {
         Score scoreDuringFistFrame = computeScoreDuringFrame(firstFrame);
         Score scoreDuringSecondFrame = computeScoreDuringFrame(secondFrame);
+        if(scoreDuringFistFrame.isSpare() && scoreDuringSecondFrame.isStrike()) {
+            return new Score(scoreDuringFistFrame.getResult() + scoreDuringSecondFrame.getResult());
+        }
 
         Score newScoreDuringFistFrame = computeNewScore(scoreDuringFistFrame, secondFrame.charAt(0), scoreDuringSecondFrame.getResult());
 
@@ -19,8 +22,7 @@ public class Bowling {
         if(scoreDuringFistFrame.isSpare()) {
             scoreDuringFistFrame.addResult(computeScoreDuringTryout(numberOfPinHit));
         }
-
-        if(scoreDuringFistFrame.isStrike()) {
+        else if(scoreDuringFistFrame.isStrike()) {
             scoreDuringFistFrame.addResult(result);
         }
 
