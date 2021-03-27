@@ -6,19 +6,20 @@ public class Bowling {
     private static final char MISSED = '-';
     private static final char SPARE = '/';
 
-    public int computeScoreInFrame(String frame) {
-        char numberOfPinHitInFirstTrie = frame.charAt(0);
-        char numberOfPinHitInSecondTrie = frame.charAt(1);
-        if(STRIKE == numberOfPinHitInFirstTrie) {
-            return 10;
-        }
-        if(SPARE == numberOfPinHitInSecondTrie) {
-            return 10;
-        }
-        return computeScore(numberOfPinHitInFirstTrie) + computeScore(numberOfPinHitInSecondTrie);
+    public Score computeScoreInFrame(String firstFrame, String secondFrame) {
+        return new Score(computeScoreDuringFrame(firstFrame) + computeScoreDuringFrame(secondFrame));
     }
 
-    private int computeScore(char numberOfPinHit) {
+    private Integer computeScoreDuringFrame(String frame) {
+        char numberOfPinHitInFirstTrieInFrameOne = frame.charAt(0);
+        char numberOfPinHitInSecondTrieInFrameOne = frame.charAt(1);
+        if(STRIKE == numberOfPinHitInFirstTrieInFrameOne || SPARE == numberOfPinHitInSecondTrieInFrameOne) {
+            return 10;
+        }
+        return computeScoreDuringTryout(numberOfPinHitInFirstTrieInFrameOne) + computeScoreDuringTryout(numberOfPinHitInSecondTrieInFrameOne);
+    }
+
+    private int computeScoreDuringTryout(char numberOfPinHit) {
         if(STRIKE == numberOfPinHit) {
             return 10;
         }
