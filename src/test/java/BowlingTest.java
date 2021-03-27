@@ -1,5 +1,4 @@
 import bowling.Bowling;
-import bowling.Score;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -63,16 +62,21 @@ class BowlingTest {
         }
 
         @Nested
-        class StrikeInFirstTry {
+        class StrikeInFirstFrame {
 
             @Test
-            void should_return_14_when__second_frame_result_was_2() {
+            void should_return_14_when_second_frame_result_was_2() {
                 assertThat(bowling.computeScoreInFrame("x|", "11|")).isEqualTo(14);
+            }
+
+            @Test
+            void should_return_20_when_second_frame_is_spare() {
+                assertThat(bowling.computeScoreInFrame("x|", "1/|")).isEqualTo(20);
             }
         }
 
         @Nested
-        class SpareInFirstTry {
+        class SpareInFirstFrame {
             @Test
             void should_return_13_when_second_frame_result_was_missed() {
                 assertThat(bowling.computeScoreInFrame("1/|", "2-|")).isEqualTo(14);
@@ -81,6 +85,10 @@ class BowlingTest {
             @Test
             void should_return_20_when_second_frame_is_strike() {
                 assertThat(bowling.computeScoreInFrame("2/|", "x|")).isEqualTo(20);
+            }
+            @Test
+            void should_return_17_when_second_frame_result_was_not_missed() {
+                assertThat(bowling.computeScoreInFrame("1/|", "23|")).isEqualTo(17);
             }
 
         }

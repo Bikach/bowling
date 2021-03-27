@@ -1,4 +1,4 @@
-package bowling;
+package bowling.score;
 
 import java.util.Objects;
 

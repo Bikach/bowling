@@ -1,5 +1,10 @@
 package bowling;
 
+import bowling.score.Score;
+import bowling.score.ScoreBuilder;
+import bowling.score.SpareScore;
+import bowling.score.StrikeScore;
+
 public class Bowling {
 
     private static final char STRIKE = 'x';

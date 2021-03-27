@@ -1,4 +1,4 @@
-package bowling;
+package bowling.score;
 
 public class StrikeScore extends Score {
 

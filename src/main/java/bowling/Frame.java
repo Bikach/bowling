@@ -1,5 +1,10 @@
 package bowling;
 
+import bowling.score.EmptyScore;
+import bowling.score.Score;
+import bowling.score.SpareScore;
+import bowling.score.StrikeScore;
+
 public class Frame {
     private final Score firstScore;
     private final Score secondScore;
@@ -44,6 +49,9 @@ public class Frame {
     }
 
     public int computeResultFromLastFrame(Frame lastFrame) {
+        if(this.result == 0) {
+            return updateResult(lastFrame);
+        }
         return this.result + updateResult(lastFrame);
     }
 
@@ -52,6 +60,9 @@ public class Frame {
             lastFrame.addScoreToResult(this.getResultFromFirstScore() + 10);
         }
         if(lastFrame.isStrike()) {
+            if(this.isSpare()) {
+                lastFrame.addScoreToResult(10);
+            }
             lastFrame.addScoreToResult(this.getResult() + 10);
         }
         return lastFrame.result;
