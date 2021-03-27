@@ -26,7 +26,7 @@ Latest commit 66e4247 on 21 Aug 2018
  1 contributor
 35 lines (30 sloc)  331 Bytes
   
-/target/
+/target/*
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
