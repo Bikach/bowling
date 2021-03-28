@@ -2,17 +2,25 @@ package bowling;
 
 import bowling.frame.Frame;
 
+import java.util.LinkedList;
+import java.util.stream.Collectors;
+
 public class Game {
 
-    private final Frame firstFrame;
-    private final Frame secondFrame;
+    private final LinkedList<Frame> frames;
 
-    public Game(Frame firstFrame, Frame secondFrame) {
-        this.firstFrame = firstFrame;
-        this.secondFrame = secondFrame;
+    public Game() {
+        this.frames = new LinkedList<>();
+    }
+
+    public void addFrame(Frame frame) {
+        frames.add(frame);
     }
 
     public int computeResult() {
-        return secondFrame.computeResultFromLastFrame(firstFrame);
+        return frames.stream()
+                .filter(Frame::hasResultPresent)
+                .collect(Collectors.toCollection(LinkedList::new))
+                .removeLast().getResult();
     }
 }

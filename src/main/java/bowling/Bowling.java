@@ -6,33 +6,40 @@ import bowling.frame.SpareFrame;
 import bowling.frame.StrikeFrame;
 import bowling.score.Score;
 import bowling.score.ScoreBuilder;
+import org.apache.commons.lang3.StringUtils;
 
 public class Bowling {
 
     private static final char STRIKE = 'x';
     private static final char SPARE = '/';
 
-    public int computeScoreInFrame(String firstFrame, String secondFrame) {
-        Frame f1 = buildFrame(firstFrame);
-        Frame f2 = buildFrame(secondFrame);
-        Game game = new Game(f1, f2);
+    public int computeScoreInFrame(String party) {
+        Game game = new Game();
+        Frame lastFrame = null;
+        int nbFrame = StringUtils.countMatches(party, '|');
+        String[] frames = party.split("\\|", nbFrame);
+        for(String frameString : frames) {
+            Frame actualFrame = buildFrame(frameString, lastFrame);
+            game.addFrame(actualFrame);
+            lastFrame = actualFrame;
+        }
 
         return game.computeResult();
     }
 
-    private Frame buildFrame(String frame) {
+    private Frame buildFrame(String frame, Frame lastFrame) {
         char numberOfPinHitInFirstTrieInFrameOne = frame.charAt(0);
-        char numberOfPinHitInSecondTrieInFrameOne = frame.charAt(1);
         if(STRIKE == numberOfPinHitInFirstTrieInFrameOne) {
-            return new StrikeFrame();
+            return new StrikeFrame(lastFrame);
         }
 
-        Score s1 = ScoreBuilder.buildScore(numberOfPinHitInFirstTrieInFrameOne);
+        Score firstScore = ScoreBuilder.buildScore(numberOfPinHitInFirstTrieInFrameOne);
+        char numberOfPinHitInSecondTrieInFrameOne = frame.charAt(1);
         if(SPARE == numberOfPinHitInSecondTrieInFrameOne) {
-            return new SpareFrame(s1);
+            return new SpareFrame(firstScore, lastFrame);
         }
-        Score s2 = ScoreBuilder.buildScore(numberOfPinHitInSecondTrieInFrameOne);
-        return new ClassicFrame(s1, s2);
+        Score secondScore = ScoreBuilder.buildScore(numberOfPinHitInSecondTrieInFrameOne);
+        return new ClassicFrame(firstScore, secondScore, lastFrame);
     }
 
 

@@ -4,22 +4,21 @@ import bowling.score.EmptyScore;
 import bowling.score.StrikeScore;
 
 public class StrikeFrame extends Frame {
-    public StrikeFrame() {
-        this.firstScore = new StrikeScore();
-        this.secondScore = new EmptyScore();
+    public StrikeFrame(Frame lastFrame) {
+        super(new StrikeScore(), new EmptyScore(), lastFrame, false);
+        updateResult();
     }
 
-    public int getValue() {
-        return MAX_SCORE;
-    }
-
-    @Override
-    public int computeResultFromLastClassicFrame(ClassicFrame lastFrame) {
-        return lastFrame.getResult();
-    }
-
-    @Override
-    public int computeResultFromLastStrikeFrame(StrikeFrame strikeFrame) {
-        return 0;
+    public void updateResult() {
+        if(lastFrame != null) {
+            if(lastFrame instanceof StrikeFrame) {
+                lastFrame.addScoreToResult(0);
+                lastFrame.hasResultPresent = true;
+            }
+            if(lastFrame instanceof SpareFrame) {
+                lastFrame.addScoreToResult(MAX_SCORE + MAX_SCORE);
+            }
+        }
+        this.result = 0;
     }
 }

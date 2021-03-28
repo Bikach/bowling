@@ -2,10 +2,19 @@ package bowling.frame;
 
 import bowling.score.Score;
 
-public abstract class Frame {
+public class Frame {
     protected Score firstScore;
     protected Score secondScore;
+    protected Frame lastFrame;
     protected int result;
+    protected boolean hasResultPresent;
+
+    public Frame(Score firstScore, Score secondScore, Frame lastFrame, boolean hasResultPresent) {
+        this.firstScore = firstScore;
+        this.secondScore = secondScore;
+        this.lastFrame = lastFrame;
+        this.hasResultPresent = hasResultPresent;
+    }
 
     protected static final int MAX_SCORE = 10;
 
@@ -13,28 +22,13 @@ public abstract class Frame {
         return result;
     }
 
-    public void addScoreToResult(int result) {
-        this.result += result;
+    public void addScoreToResult(int resultToAdd) {
+        this.result += resultToAdd;
     }
 
-    public int computeResultFromLastFrame(Frame frame) {
-        if(frame instanceof StrikeFrame) {
-            return this.computeResultFromLastStrikeFrame((StrikeFrame) frame);
-        }
-        if(frame instanceof SpareFrame) {
-            return this.computeResultFromLastSpareFrame((SpareFrame) frame);
-        }
-
-        return this.computeResultFromLastClassicFrame((ClassicFrame) frame);
+    public boolean hasResultPresent() {
+        return hasResultPresent || result > 0;
     }
-
-    public int computeResultFromLastSpareFrame(SpareFrame spareFrame) {
-        spareFrame.addScoreToResult(spareFrame.getValue() + this.firstScore.getResult());
-        return spareFrame.getResult() + this.getResult();
-    }
-
-    public abstract int computeResultFromLastClassicFrame(ClassicFrame lastFrame);
-    public abstract int computeResultFromLastStrikeFrame(StrikeFrame strikeFrame);
 
     @Override
     public String toString() {
