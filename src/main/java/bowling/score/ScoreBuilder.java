@@ -3,8 +3,8 @@ package bowling.score;
 public class ScoreBuilder {
 
     private ScoreBuilder() {
-
     }
+
     private static final char STRIKE = 'x';
     private static final char MISSED = '-';
 

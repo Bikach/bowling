@@ -1,24 +1,22 @@
 package bowling.frame;
 
+import bowling.score.EmptyScore;
 import bowling.score.Score;
-import bowling.score.SpareScore;
 
 public class SpareFrame extends Frame {
 
-    public SpareFrame(Score score, Frame lastFrame) {
-        super(score, new SpareScore(), lastFrame, false);
-        updateResult();
+    private final Score nextScore;
+
+    public SpareFrame(Score nextScore, Frame lastFrame) {
+        super(lastFrame, false);
+        this.nextScore = nextScore;
     }
 
-    public void updateResult() {
-        if(lastFrame != null) {
-            if(lastFrame instanceof StrikeFrame) {
-                lastFrame.addScoreToResult(MAX_SCORE + MAX_SCORE);
-            }
-            if(lastFrame instanceof SpareFrame) {
-                lastFrame.addScoreToResult(this.firstScore.getResult() + MAX_SCORE);
-            }
-        }
-        this.result = 0;
+    @Override
+    public void computeResult() {
+        this.result = lastFrame.getResult() +
+                MAX_SCORE +
+                nextScore.getResult();
+        this.hasResultPresent = !(nextScore instanceof EmptyScore);
     }
 }

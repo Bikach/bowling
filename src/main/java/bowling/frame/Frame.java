@@ -1,17 +1,11 @@
 package bowling.frame;
 
-import bowling.score.Score;
-
-public class Frame {
-    protected Score firstScore;
-    protected Score secondScore;
-    protected Frame lastFrame;
+public abstract class Frame {
     protected int result;
     protected boolean hasResultPresent;
+    protected Frame lastFrame;
 
-    public Frame(Score firstScore, Score secondScore, Frame lastFrame, boolean hasResultPresent) {
-        this.firstScore = firstScore;
-        this.secondScore = secondScore;
+    protected Frame(Frame lastFrame, boolean hasResultPresent) {
         this.lastFrame = lastFrame;
         this.hasResultPresent = hasResultPresent;
     }
@@ -22,20 +16,17 @@ public class Frame {
         return result;
     }
 
-    public void addScoreToResult(int resultToAdd) {
-        this.result += resultToAdd;
+    public boolean hasResultPresent() {
+        return hasResultPresent;
     }
 
-    public boolean hasResultPresent() {
-        return hasResultPresent || result > 0;
-    }
+    public abstract void computeResult();
 
     @Override
     public String toString() {
         return "Frame{" +
-                "firstScore=" + firstScore +
-                ", secondScore=" + secondScore +
                 ", result=" + result +
+                ", hasResultPresent=" + hasResultPresent +
                 '}';
     }
 }

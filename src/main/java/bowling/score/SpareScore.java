@@ -2,7 +2,7 @@ package bowling.score;
 
 public class SpareScore extends Score {
 
-    public SpareScore() {
-        super(10);
+    public SpareScore(int result) {
+        super(result);
     }
 }

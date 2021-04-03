@@ -1,46 +1,49 @@
 package bowling;
 
-import bowling.frame.ClassicFrame;
-import bowling.frame.Frame;
-import bowling.frame.SpareFrame;
-import bowling.frame.StrikeFrame;
+import bowling.frame.*;
 import bowling.score.Score;
-import bowling.score.ScoreBuilder;
-import org.apache.commons.lang3.StringUtils;
+import bowling.score.ScoreScanner;
+import bowling.score.SpareScore;
+import bowling.score.StrikeScore;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Bowling {
 
-    private static final char STRIKE = 'x';
-    private static final char SPARE = '/';
+    private final ScoreScanner scoreScanner = new ScoreScanner();
 
-    public int computeScoreInFrame(String party) {
-        Game game = new Game();
-        Frame lastFrame = null;
-        int nbFrame = StringUtils.countMatches(party, '|');
-        String[] frames = party.split("\\|", nbFrame);
-        for(String frameString : frames) {
-            Frame actualFrame = buildFrame(frameString, lastFrame);
-            game.addFrame(actualFrame);
-            lastFrame = actualFrame;
-        }
-
+    public int computeScoreBowling(String party) {
+        Game game = buildGame(party);
         return game.computeResult();
     }
 
-    private Frame buildFrame(String frame, Frame lastFrame) {
-        char numberOfPinHitInFirstTrieInFrameOne = frame.charAt(0);
-        if(STRIKE == numberOfPinHitInFirstTrieInFrameOne) {
-            return new StrikeFrame(lastFrame);
-        }
+    private Game buildGame(String party) {
+        scoreScanner.scanParty(party);
 
-        Score firstScore = ScoreBuilder.buildScore(numberOfPinHitInFirstTrieInFrameOne);
-        char numberOfPinHitInSecondTrieInFrameOne = frame.charAt(1);
-        if(SPARE == numberOfPinHitInSecondTrieInFrameOne) {
-            return new SpareFrame(firstScore, lastFrame);
-        }
-        Score secondScore = ScoreBuilder.buildScore(numberOfPinHitInSecondTrieInFrameOne);
-        return new ClassicFrame(firstScore, secondScore, lastFrame);
+        return new Game(buildFrames());
     }
 
+    private List<Frame> buildFrames() {
+        LinkedList<Frame> frames = new LinkedList<>(Collections.singletonList(new EmptyFrame()));
+        LinkedList<Score> scores = scoreScanner.getScores();
 
+        while(scoreScanner.hasScoresNotEmpty()) {
+            Frame lastFrame = frames.getLast();
+            Score firstScore = scores.removeFirst();
+            if(firstScore instanceof StrikeScore) {
+                frames.add(new StrikeFrame(scoreScanner.retrieveTwoNextScore(), lastFrame));
+                continue;
+            }
+
+            Score secondScore = scores.removeFirst();
+            if(secondScore instanceof SpareScore) {
+                frames.add(new SpareFrame(scoreScanner.retrieveNextScore(), lastFrame));
+            } else {
+                frames.add(new ClassicFrame(firstScore, secondScore, lastFrame));
+            }
+        }
+        return frames;
+    }
 }

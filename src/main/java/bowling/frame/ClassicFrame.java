@@ -3,21 +3,19 @@ package bowling.frame;
 import bowling.score.Score;
 
 public class ClassicFrame extends Frame {
-    public ClassicFrame(Score s1, Score s2, Frame lastFrame) {
-        super(s1, s2, lastFrame, true);
-        updateResult();
+    private final Score firstScore;
+    private final Score secondScore;
+
+    public ClassicFrame(Score firstScore, Score secondScore, Frame lastFrame) {
+        super(lastFrame, true);
+        this.firstScore = firstScore;
+        this.secondScore = secondScore;
     }
 
-    public void updateResult() {
-        this.addScoreToResult(firstScore.getResult() + secondScore.getResult());
-        if(lastFrame != null) {
-            if(lastFrame instanceof StrikeFrame) {
-                lastFrame.addScoreToResult(this.getResult() + MAX_SCORE);
-            }
-            if(lastFrame instanceof SpareFrame) {
-                lastFrame.addScoreToResult(this.firstScore.getResult() + MAX_SCORE);
-            }
-            addScoreToResult(lastFrame.getResult());
-        }
+    @Override
+    public void computeResult() {
+        this.result = lastFrame.getResult() +
+                firstScore.getResult() +
+                secondScore.getResult();
     }
 }

@@ -3,24 +3,31 @@ package bowling;
 import bowling.frame.Frame;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Game {
 
-    private final LinkedList<Frame> frames;
+    private final List<Frame> frames;
 
-    public Game() {
-        this.frames = new LinkedList<>();
-    }
-
-    public void addFrame(Frame frame) {
-        frames.add(frame);
+    public Game(List<Frame> frames) {
+        this.frames = frames;
     }
 
     public int computeResult() {
-        return frames.stream()
-                .filter(Frame::hasResultPresent)
-                .collect(Collectors.toCollection(LinkedList::new))
-                .removeLast().getResult();
+        frames.forEach(Frame::computeResult);
+
+        if(hasResultInFrames()) {
+            return frames.stream()
+                    .filter(Frame::hasResultPresent)
+                    .collect(Collectors.toCollection(LinkedList::new))
+                    .removeLast().getResult();
+        }
+
+        return 0;
+    }
+
+    private boolean hasResultInFrames() {
+        return frames.stream().anyMatch(Frame::hasResultPresent);
     }
 }
