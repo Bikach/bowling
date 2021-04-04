@@ -28,18 +28,24 @@ public class FrameBuilder {
 
         while(scoreScanner.hasScoresNotEmpty()) {
             Frame lastFrame = frames.getLast();
-            Score firstScore = scores.removeFirst();
-            if(firstScore instanceof StrikeScore) {
-                frames.add(new StrikeFrame(scoreScanner.retrieveTwoNextScore(), lastFrame));
-                continue;
+            if(scoreScanner.haveBonus()) {
+                frames.add(new BonusFrame(scores, lastFrame));
+                break;
+            } else {
+                Score firstScore = scores.removeFirst();
+                if(firstScore instanceof StrikeScore) {
+                    frames.add(new StrikeFrame(scoreScanner.retrieveTwoNextScore(), lastFrame));
+                    continue;
+                }
+
+                Score secondScore = scores.removeFirst();
+                if(secondScore instanceof SpareScore) {
+                    frames.add(new SpareFrame(scoreScanner.retrieveNextScore(), lastFrame));
+                } else {
+                    frames.add(new ClassicFrame(firstScore, secondScore, lastFrame));
+                }
             }
 
-            Score secondScore = scores.removeFirst();
-            if(secondScore instanceof SpareScore) {
-                frames.add(new SpareFrame(scoreScanner.retrieveNextScore(), lastFrame));
-            } else {
-                frames.add(new ClassicFrame(firstScore, secondScore, lastFrame));
-            }
         }
         return frames;
     }

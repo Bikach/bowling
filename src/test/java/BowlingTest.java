@@ -12,7 +12,7 @@ class BowlingTest {
     class OneFrame {
         @Test
         void should_return_1_when_one_pin_hit() {
-            assertThat(bowling.computeScoreBowling("1-|")).isEqualTo(1);
+            assertThat(bowling.computeBowlingScore("1-|")).isEqualTo(1);
         }
     }
 
@@ -26,17 +26,17 @@ class BowlingTest {
             class ClassicInFirstFrame {
                 @Test
                 void should_return_5_when_first_frame_result_is_3_and_second_frame_result_is_2() {
-                    assertThat(bowling.computeScoreBowling("12|11|")).isEqualTo(5);
+                    assertThat(bowling.computeBowlingScore("12|11|")).isEqualTo(5);
                 }
 
                 @Test
                 void should_return_2_when_second_frame_result_is_strike() {
-                    assertThat(bowling.computeScoreBowling("11|x|")).isEqualTo(2);
+                    assertThat(bowling.computeBowlingScore("11|x|")).isEqualTo(2);
                 }
 
                 @Test
                 void should_return_2_when_second_frame_result_is_spare() {
-                    assertThat(bowling.computeScoreBowling("11|1/|")).isEqualTo(2);
+                    assertThat(bowling.computeBowlingScore("11|1/|")).isEqualTo(2);
                 }
             }
 
@@ -44,17 +44,17 @@ class BowlingTest {
             class StrikeInFirstFrame {
                 @Test
                 void should_return_14_when_second_frame_result_is_2() {
-                    assertThat(bowling.computeScoreBowling("x|11|")).isEqualTo(14);
+                    assertThat(bowling.computeBowlingScore("x|11|")).isEqualTo(14);
                 }
 
                 @Test
                 void should_return_20_when_second_frame_is_spare() {
-                    assertThat(bowling.computeScoreBowling("x|1/|")).isEqualTo(20);
+                    assertThat(bowling.computeBowlingScore("x|1/|")).isEqualTo(20);
                 }
 
                 @Test
                 void should_return_20_when_second_frame_is_strike() {
-                    assertThat(bowling.computeScoreBowling("x|x|")).isZero();
+                    assertThat(bowling.computeBowlingScore("x|x|")).isZero();
                 }
             }
 
@@ -62,22 +62,22 @@ class BowlingTest {
             class SpareInFirstFrame {
                 @Test
                 void should_return_13_when_second_frame_result_is_missed() {
-                    assertThat(bowling.computeScoreBowling("1/|2-|")).isEqualTo(14);
+                    assertThat(bowling.computeBowlingScore("1/|2-|")).isEqualTo(14);
                 }
 
                 @Test
                 void should_return_20_when_second_frame_is_strike() {
-                    assertThat(bowling.computeScoreBowling("2/|x|")).isEqualTo(20);
+                    assertThat(bowling.computeBowlingScore("2/|x|")).isEqualTo(20);
                 }
 
                 @Test
                 void should_return_12_when_second_frame_is_spare() {
-                    assertThat(bowling.computeScoreBowling("1/|2/|")).isEqualTo(12);
+                    assertThat(bowling.computeBowlingScore("1/|2/|")).isEqualTo(12);
                 }
 
                 @Test
                 void should_return_17_when_second_frame_result_is_not_missed() {
-                    assertThat(bowling.computeScoreBowling("1/|23|")).isEqualTo(17);
+                    assertThat(bowling.computeBowlingScore("1/|23|")).isEqualTo(17);
                 }
             }
         }
@@ -88,17 +88,17 @@ class BowlingTest {
             class SecondTryMissed {
                 @Test
                 void should_return_1_when_one_pin_hit() {
-                    assertThat(bowling.computeScoreBowling("1-|--|")).isEqualTo(1);
+                    assertThat(bowling.computeBowlingScore("1-|--|")).isEqualTo(1);
                 }
 
                 @Test
                 void should_return_2_when_two_pins_hit() {
-                    assertThat(bowling.computeScoreBowling("2-|--|")).isEqualTo(2);
+                    assertThat(bowling.computeBowlingScore("2-|--|")).isEqualTo(2);
                 }
 
                 @Test
                 void should_return_0_when_missed() {
-                    assertThat(bowling.computeScoreBowling("--|--|")).isZero();
+                    assertThat(bowling.computeBowlingScore("--|--|")).isZero();
                 }
             }
 
@@ -107,12 +107,12 @@ class BowlingTest {
 
                 @Test
                 void should_return_2_when_two_pin_hit_after_two_try() {
-                    assertThat(bowling.computeScoreBowling("11|--|")).isEqualTo(2);
+                    assertThat(bowling.computeBowlingScore("11|--|")).isEqualTo(2);
                 }
 
                 @Test
                 void should_return_10_when_spare_in_second_try() {
-                    assertThat(bowling.computeScoreBowling("1/|--|")).isEqualTo(10);
+                    assertThat(bowling.computeBowlingScore("1/|--|")).isEqualTo(10);
                 }
 
             }
@@ -121,7 +121,7 @@ class BowlingTest {
             class StrikeInFirstTry {
                 @Test
                 void should_return_10_when_strike_to_first_try() {
-                    assertThat(bowling.computeScoreBowling("x|--|")).isEqualTo(10);
+                    assertThat(bowling.computeBowlingScore("x|--|")).isEqualTo(10);
                 }
 
             }
@@ -132,13 +132,23 @@ class BowlingTest {
     class ThreeFrames {
         @Test
         void should_return_6_when_at_each_frame_we_have_result_equal_to_2() {
-            assertThat(bowling.computeScoreBowling("11|11|2-|")).isEqualTo(6);
+            assertThat(bowling.computeBowlingScore("11|11|2-|")).isEqualTo(6);
         }
 
         @Test
         void should_return_30_when_all_frames_is_strike() {
-            assertThat(bowling.computeScoreBowling("x|x|x|")).isEqualTo(30);
+            assertThat(bowling.computeBowlingScore("x|x|x|")).isEqualTo(30);
         }
+    }
+
+    @Nested
+    class HandleBonus {
+        @Test
+        void should_return_10_when_in_bonus_we_have_spare_and_one_miss() {
+            //assertThat(bowling.computeScoreBowling("11|11|11|11|11|11|11|11|11|9/-|")).isEqualTo(28);
+            assertThat(bowling.computeBowlingScore("9/-|")).isEqualTo(10);
+        }
+
     }
 
 }

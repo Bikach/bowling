@@ -7,8 +7,8 @@ public class Bowling {
 
     private final ScoreScanner scoreScanner = new ScoreScanner();
 
-    public int computeScoreBowling(String party) {
-        Game game = buildGame(party);
+    public int computeBowlingScore(String party) {
+        Game game = this.buildGame(party);
         return game.computeResult();
     }
 

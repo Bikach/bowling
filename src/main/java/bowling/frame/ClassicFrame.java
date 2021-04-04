@@ -18,4 +18,15 @@ public class ClassicFrame extends Frame {
                 firstScore.getResult() +
                 secondScore.getResult();
     }
+
+    @Override
+    public String toString() {
+        return "ClassicFrame{" +
+                "firstScore=" + firstScore +
+                ", secondScore=" + secondScore +
+                ", result=" + result +
+                ", hasResultPresent=" + hasResultPresent +
+                ", lastFrame=" + lastFrame +
+                '}';
+    }
 }

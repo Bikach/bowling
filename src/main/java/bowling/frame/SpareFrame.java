@@ -19,4 +19,14 @@ public class SpareFrame extends Frame {
                 nextScore.getResult();
         this.hasResultPresent = !(nextScore instanceof EmptyScore);
     }
+
+    @Override
+    public String toString() {
+        return "SpareFrame{" +
+                "result=" + result +
+                ", hasResultPresent=" + hasResultPresent +
+                ", lastFrame=" + lastFrame +
+                ", nextScore=" + nextScore +
+                '}';
+    }
 }

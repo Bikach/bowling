@@ -8,17 +8,23 @@ import java.util.LinkedList;
 public class ScoreScanner {
     private static final char STRIKE = 'x';
     private static final char SPARE = '/';
+    private static final int MAX_SCORE = 10;
+    private boolean haveBonus = false;
+
     private final LinkedList<Score> scores;
 
     public ScoreScanner() {
         scores = new LinkedList<>();
     }
 
-
     public void scanParty(String party) {
         String[] frames = FrameBuilder.splitPartyToFrames(party);
         for(String frameString : frames) {
             fillScores(frameString);
+            if(frameString.length() == 4) {
+                scores.add(ScoreBuilder.buildScore(frameString.charAt(2)));
+                haveBonus = true;
+            }
         }
     }
 
@@ -31,7 +37,7 @@ public class ScoreScanner {
         char numberOfPinHitInSecondTrieInFrameOne = frameString.charAt(1);
         scores.add(ScoreBuilder.buildScore(numberOfPinHitInFirstTrieInFrameOne));
         if(SPARE == numberOfPinHitInSecondTrieInFrameOne) {
-            scores.add(new SpareScore(10 - scores.getLast().getResult()));
+            scores.add(new SpareScore(MAX_SCORE - scores.getLast().getResult()));
             return;
         }
         scores.add(ScoreBuilder.buildScore(numberOfPinHitInSecondTrieInFrameOne));
@@ -60,5 +66,9 @@ public class ScoreScanner {
             return Pair.of(scores.getFirst(), new EmptyScore());
         }
         return Pair.of(scores.get(0), scores.get(1));
+    }
+
+    public boolean haveBonus() {
+        return haveBonus;
     }
 }

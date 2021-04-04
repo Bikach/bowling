@@ -22,4 +22,15 @@ public class StrikeFrame extends Frame {
                 nextSecondScore.getResult();
         this.hasResultPresent = !(nextSecondScore instanceof EmptyScore);
     }
+
+    @Override
+    public String toString() {
+        return "StrikeFrame{" +
+                "result=" + result +
+                ", hasResultPresent=" + hasResultPresent +
+                ", lastFrame=" + lastFrame +
+                ", nextFirstScore=" + nextFirstScore +
+                ", nextSecondScore=" + nextSecondScore +
+                '}';
+    }
 }
